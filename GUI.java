@@ -3,6 +3,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -16,11 +17,13 @@ public class GUI {
  JScrollPane scrollPane;
  JMenuBar menuBar;
  JMenu menuFile,menuEdit,menuFormat,menuColor;
+ JMenuItem iNew, iOpen, iSaveAs,iSave,iExit;
  public GUI()
 {
     createWindow();
     createTextArea();
     createMenu();
+    createFileMenu();
     window.setVisible(true);
   
     
@@ -59,6 +62,18 @@ public void createMenu()
     menuBar.add(menuEdit);
     menuBar.add(menuFormat);
     menuBar.add(menuColor);
+}
+public void createFileMenu(){
+   iNew=new JMenuItem("New");
+   menuFile.add(iNew);
+   iOpen=new JMenuItem("Open");
+   menuFile.add(iOpen);
+   iSaveAs=new JMenuItem("Save As");
+   menuFile.add(iSaveAs);
+   iSave= new JMenuItem("Save");
+   menuFile.add(iSave);
+   iExit=new JMenuItem("Exit");
+   menuFile.add(iExit);
 }
 
     public static void main(String[] args) {
