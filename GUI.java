@@ -72,6 +72,8 @@ public void createFileMenu(){
    iNew.setActionCommand("New");
    menuFile.add(iNew);
    iOpen=new JMenuItem("Open");
+   iOpen.addActionListener(this);
+   iOpen.setActionCommand("Open");
    menuFile.add(iOpen);
    iSaveAs=new JMenuItem("Save As");
    menuFile.add(iSaveAs);
@@ -87,6 +89,8 @@ public void actionPerformed(ActionEvent e)
     switch (command) {
         case "New":
             file.newFile();
+            case "Open":
+                file.Open();
             
             break;
     
