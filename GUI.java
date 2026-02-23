@@ -30,9 +30,18 @@ JMenuItem iFontSize8,iFontSize10,iFontSize12,iFontSize14,iFontSize16,iFontSize18
 
 boolean Word_wrap=false;
 
+//Color part
+JMenuItem iwhite,iBlack,iBrown;
+
+
 
 Function_file file=new Function_file(this);
 Format_function format=new Format_function(this);
+Function_color Color=new Function_color(this);
+
+
+
+
  public GUI()
 {
     createWindow();
@@ -40,6 +49,7 @@ Format_function format=new Format_function(this);
     createMenu();
     createFileMenu();
     createFormat();
+    createColor();
 
 
     format.selectedFont="Arial";
@@ -67,7 +77,7 @@ public void createTextArea()
        textArea= new JTextArea();
        window.add(textArea,BorderLayout.CENTER);
        textArea.setBackground(new Color(255, 220, 180)); 
-        textArea.setForeground(Color.BLACK);
+        textArea.setForeground(new Color(0,0,0));
         scrollPane=new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         window.add(scrollPane);
 
@@ -185,11 +195,29 @@ public void createFormat()
 
 
 }
+public void createColor()
+{
+    iwhite=new JMenuItem("White");
+    iwhite.addActionListener(this);
+    iwhite.setActionCommand("White");
+    menuColor.add(iwhite);
+
+    iBlack=new JMenuItem("Black");
+    iBlack.addActionListener(this);
+    iBlack.setActionCommand("Black");
+    menuColor.add(iBlack);
+
+    iBrown=new JMenuItem("Brown");
+    iBrown.addActionListener(this);
+    iBrown.setActionCommand("Brown");
+    menuColor.add(iBrown);
+}
 
 public void actionPerformed(ActionEvent e)
 {
     String command=e.getActionCommand();
     switch (command) {
+    //File commands
         case "New":
             file.newFile();
             break;
@@ -205,6 +233,8 @@ public void actionPerformed(ActionEvent e)
         case "Exit":
             file.Exit();
             break;
+
+    //Format commands
         case "Word Wrap":
             format.Wrap();
             break;
@@ -241,7 +271,25 @@ public void actionPerformed(ActionEvent e)
             format.setFont(command);
             break;
             
-    
+    //Color commands
+
+        case "White":
+               Color.setColor(command);
+               break;
+
+        case "Black":
+            Color.setColor(command);
+            break;
+        
+        case "Brown":
+            Color.setColor(command);
+            break;
+
+
+
+
+
+
         default:
             break;
     }
