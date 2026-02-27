@@ -7,6 +7,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoManager;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -33,11 +36,15 @@ boolean Word_wrap=false;
 //Color part
 JMenuItem iwhite,iBlack,iBrown;
 
+//Edit part
+JMenuItem iUndo,iRedo;
 
+UndoManager um=new UndoManager();
 
 Function_file file=new Function_file(this);
 Format_function format=new Format_function(this);
 Function_color Color=new Function_color(this);
+Function_Edit edit=new Function_Edit(this);
 
 
 
@@ -48,6 +55,7 @@ Function_color Color=new Function_color(this);
     createTextArea();
     createMenu();
     createFileMenu();
+    createEdit();
     createFormat();
     createColor();
 
@@ -76,6 +84,16 @@ public void createTextArea()
 {
        textArea= new JTextArea();
        window.add(textArea,BorderLayout.CENTER);
+       
+       textArea.getDocument().addUndoableEditListener( new UndoableEditListener() {
+
+        @Override
+        public void undoableEditHappened(UndoableEditEvent e) {
+            um.addEdit(e.getEdit());
+        }
+        
+       });
+
        textArea.setBackground(new Color(255, 220, 180)); 
         textArea.setForeground(new Color(0,0,0));
         scrollPane=new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -213,6 +231,19 @@ public void createColor()
     menuColor.add(iBrown);
 }
 
+public void createEdit()
+{
+    iUndo=new JMenuItem("Undo");
+    iUndo.addActionListener(this);
+    iUndo.setActionCommand("Undo");
+    menuEdit.add(iUndo);
+
+    iRedo=new JMenuItem("Redo");
+    iRedo.addActionListener(this);
+    iRedo.setActionCommand("Redo");
+    menuEdit.add(iRedo);
+}
+
 public void actionPerformed(ActionEvent e)
 {
     String command=e.getActionCommand();
@@ -285,8 +316,14 @@ public void actionPerformed(ActionEvent e)
             Color.setColor(command);
             break;
 
+//Edit commands
 
-
+        case "Undo":
+            edit.Undo();
+            break;
+        case "Redo":
+            edit.Redo();
+            break;
 
 
 
